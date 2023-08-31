@@ -1,7 +1,4 @@
 import BottomPanel from '../BottomPanel';
-import { ErrorAlert } from '../ErrorAlert';
-import { Identity } from '../Identity';
-import InfoModal from '../InfoModal';
 import Map from '../Map';
 
 const App = () => {
@@ -9,9 +6,6 @@ const App = () => {
     <>
       <Map></Map>
       <BottomPanel></BottomPanel>
-      <ErrorAlert></ErrorAlert>
-      <Identity></Identity>
-      <InfoModal></InfoModal>
     </>
   );
 };

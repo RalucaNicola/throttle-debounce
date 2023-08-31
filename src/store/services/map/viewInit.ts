@@ -2,14 +2,11 @@ import PortalItem from '@arcgis/core/portal/PortalItem';
 import WebMap from '@arcgis/core/WebMap';
 import { mapConfig } from '../../../config';
 import MapView from '@arcgis/core/views/MapView';
-import { setGlobalView } from '../../globals';
 import { AppDispatch } from '../../storeConfiguration';
 import { setViewLoaded } from '../app-loading/loadingSlice';
-import { getMapCenterFromHashParams } from '../../../utils/URLHashParams';
-import { setError } from '../error-messaging/errorSlice';
-import { initializeCountryLayer } from './countryLayerInit';
-import { initializeViewEventListeners } from './eventListeners';
 
+
+export let view: MapView | null = null;
 
 export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: AppDispatch) => {
     try {
@@ -48,18 +45,11 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
         });
 
         await mapView.when(() => {
-            setGlobalView(mapView);
+            view = mapView;
             dispatch(setViewLoaded(true));
-            const mapCenter = getMapCenterFromHashParams();
-            if (mapCenter) {
-                mapView.goTo({ zoom: mapCenter.zoom, center: [mapCenter.center.lon, mapCenter.center.lat] });
-            }
-            dispatch(initializeCountryLayer());
             //window.view = mapView;
-            dispatch(initializeViewEventListeners());
         });
     } catch (error) {
-        const { message } = error;
-        dispatch(setError({ name: 'Error on map', message: message }));
+        console.log(error);
     }
 };
