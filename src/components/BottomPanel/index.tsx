@@ -21,14 +21,13 @@ const BottomPanel = () => {
 
   function startRecording() {
     animationId = setTimeout(startRecording, 100);
-    console.log(animationId);
     dispatch(addFrameData());
   }
 
   const getHeader = () => {
     return (
       <div className={styles.actionsContainer}>
-        <div className={styles.leftActionsContainer}></div>
+        <div className={styles.leftActionsContainer}>Start recording and then hover over the map</div>
         <div className={styles.rightActionsContainer}>
           <CalciteAction
             icon={visible ? 'chevronDown' : 'chevronUp'}
@@ -47,28 +46,38 @@ const BottomPanel = () => {
       {getHeader()}
       <motion.div layout='size' animate={{ height: visible ? 'auto' : 0 }} style={{ overflow: 'hidden' }}>
         <Chart></Chart>
-        {recording ? (
-          <CalciteButton
-            onClick={() => {
-              setRecording(false);
-              clearTimeout(animationId);
-              animationId = null;
-              removeEventListeners();
-            }}
-          >
-            Stop recording
-          </CalciteButton>
-        ) : (
-          <CalciteButton
-            onClick={() => {
-              setRecording(true);
-              startRecording();
-              dispatch(initializeEventListeners());
-            }}
-          >
-            Start recording
-          </CalciteButton>
-        )}
+        <div className={styles.buttonContainer}>
+          {recording ? (
+            <CalciteButton
+              appearance='outline'
+              icon-start='pause'
+              round
+              scale='l'
+              onClick={() => {
+                setRecording(false);
+                clearTimeout(animationId);
+                animationId = null;
+                removeEventListeners();
+              }}
+            >
+              Stop recording
+            </CalciteButton>
+          ) : (
+            <CalciteButton
+              appearance='outline'
+              icon-start='play'
+              round
+              scale='l'
+              onClick={() => {
+                setRecording(true);
+                startRecording();
+                dispatch(initializeEventListeners());
+              }}
+            >
+              Start recording
+            </CalciteButton>
+          )}
+        </div>
       </motion.div>
     </div>
   );

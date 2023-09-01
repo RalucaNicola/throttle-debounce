@@ -4,9 +4,16 @@ import { mapConfig } from '../../../config';
 import MapView from '@arcgis/core/views/MapView';
 import { AppDispatch } from '../../storeConfiguration';
 import { setViewLoaded } from '../app-loading/loadingSlice';
-
+import { initializeCountriesLayer } from './countriesLayer';
 
 export let view: MapView | null = null;
+
+export function destroyView() {
+    if (view) {
+        view.destroy();
+        view = null;
+    }
+}
 
 export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: AppDispatch) => {
     try {
@@ -48,6 +55,8 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
             view = mapView;
             dispatch(setViewLoaded(true));
             //window.view = mapView;
+            initializeCountriesLayer(view);
+
         });
     } catch (error) {
         console.log(error);

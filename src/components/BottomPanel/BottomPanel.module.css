@@ -29,9 +29,9 @@
   align-items: center;
 }
 
-.selectedCountry {
-  color: var(--calcite-ui-brand);
-  font-weight: bold;
+.buttonContainer {
+  text-align: center;
+  padding: 20px 0;
 }
 
 @media (max-width: 700px) {

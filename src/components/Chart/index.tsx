@@ -8,26 +8,36 @@ const Chart = () => {
   });
   return (
     <>
-      <p>Events</p>
+      <p className={styles.eventTitle}>Event fires</p>
       <div className={styles.container}>
         {frameData.map((frame, index) => {
-          return (
-            <div
-              key={index}
-              className={styles.item}
-              style={{ backgroundColor: frame.event ? 'white' : 'transparent' }}
-            ></div>
-          );
+          return <div key={index} className={`${styles.itemEvent} ${frame.event ? styles.checked : ''}`}></div>;
         })}
       </div>
-      <p>Throttled function call</p>
+      <p className={styles.throttleTitle}>Throttled function runs (wait time of 500ms)</p>
+      <div className={styles.container}>
+        {frameData.map((frame, index) => {
+          return <div key={index} className={`${styles.itemThrottle} ${frame.throttle ? styles.checked : ''}`}></div>;
+        })}
+      </div>
+      <p className={styles.debounceTitle}>Debounced function runs (wait time of 100ms)</p>
+      <div className={styles.container}>
+        {frameData.map((frame, index) => {
+          return <div key={index} className={`${styles.itemDebounce} ${frame.debounce ? styles.checked : ''}`}></div>;
+        })}
+      </div>
+      <p className={styles.promiseTitle}>
+        Debounced async function gets <span className={styles.aborted}>aborted</span> or is{' '}
+        <span className={styles.successful}>successful</span>
+      </p>
       <div className={styles.container}>
         {frameData.map((frame, index) => {
           return (
             <div
               key={index}
-              className={styles.item}
-              style={{ backgroundColor: frame.throttle ? 'white' : 'transparent' }}
+              className={`${styles.itemPromise} ${
+                frame.promise === 2 ? styles.aborted : frame.promise === 1 ? styles.successful : ''
+              }`}
             ></div>
           );
         })}

@@ -1,7 +1,8 @@
 import * as styles from './Map.module.css';
 import { FC, ReactNode, useEffect, useRef } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { initializeMapView } from '../../store/services/map/viewInit';
+import { destroyView, initializeMapView } from '../../store/services/map/viewInit';
+import { removeEventListeners } from '../../store/services/map/eventListeners';
 
 interface Props {
   children?: ReactNode;
@@ -15,7 +16,10 @@ const Map: FC<Props> = () => {
   useEffect(() => {
     if (mapDivRef.current) {
       dispatch(initializeMapView(mapDivRef.current));
-      return () => {};
+      return () => {
+        removeEventListeners();
+        destroyView();
+      };
     }
   }, [mapDivRef.current]);
 

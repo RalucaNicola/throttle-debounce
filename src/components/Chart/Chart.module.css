@@ -1,10 +1,82 @@
-.item {
+:root {
+  --color-event: rgb(254, 173, 97);
+  --color-throttle: rgb(184, 137, 255);
+  --color-debounce: rgb(137, 255, 243);
+  --color-promise-abort: rgb(255, 137, 163);
+  --color-promise-success: rgb(137, 255, 147);
+}
+
+.itemEvent {
   height: 20px;
   width: 20px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--color-event);
 }
+
+.itemEvent.checked {
+  background-color: var(--color-event);
+}
+
+.itemThrottle {
+  height: 20px;
+  width: 20px;
+  border-bottom: 1px solid var(--color-throttle);
+}
+
+.itemThrottle.checked {
+  background-color: var(--color-throttle);
+}
+
+.itemDebounce {
+  height: 20px;
+  width: 20px;
+  border-bottom: 1px solid var(--color-debounce);
+}
+
+.itemDebounce.checked {
+  background-color: var(--color-debounce);
+}
+
 .container {
   display: flex;
   gap: 2px;
   width: 100%;
+}
+
+p {
+  margin: 10px 0 0 0;
+  font-size: 0.9rem;
+}
+
+.eventTitle {
+  color: var(--color-event);
+}
+
+.throttleTitle {
+  color: var(--color-throttle);
+}
+
+.debounceTitle {
+  color: var(--color-debounce);
+}
+
+.itemPromise {
+  height: 20px;
+  width: 20px;
+  border-bottom: 1px solid white;
+}
+
+.itemPromise.successful {
+  background-color: var(--color-promise-success);
+}
+
+.successful {
+  color: var(--color-promise-success);
+}
+
+.itemPromise.aborted {
+  background-color: var(--color-promise-abort);
+}
+
+.aborted {
+  color: var(--color-promise-abort);
 }
