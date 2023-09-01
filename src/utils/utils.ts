@@ -7,7 +7,6 @@ interface ThrottleOptions {
     trailing?: boolean;
 }
 
-
 export function throttle<T extends (...args: any[]) => any>(func: T, wait: number, options?: ThrottleOptions): (...args: Parameters<T>) => T {
     let timeout: number | undefined;
     let result: T;
@@ -67,13 +66,15 @@ function restArguments<T extends (...args: any[]) => any>(func: T) {
     };
 }
 
+
 export function debounce<T extends (...args: any[]) => any>(func: T, wait: number, immediate?: boolean) {
     let timeout: number, previous: number;
     let result: T;
     let args: IArguments;
 
-    const later = function () {
-        var passed = now() - previous;
+    const later = restArguments(function (_args) {
+        args = _args;
+        const passed = now() - previous;
         if (wait > passed) {
             timeout = setTimeout(later, wait - passed);
         } else {
@@ -82,7 +83,7 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
 
             if (!timeout) args = null;
         }
-    };
+    });
 
     let debounced = restArguments(function (_args) {
         args = _args;

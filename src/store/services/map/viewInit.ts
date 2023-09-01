@@ -5,6 +5,8 @@ import MapView from '@arcgis/core/views/MapView';
 import { AppDispatch } from '../../storeConfiguration';
 import { setViewLoaded } from '../app-loading/loadingSlice';
 import { initializeCountriesLayer } from './countriesLayer';
+import Graphic from '@arcgis/core/Graphic';
+import { SimpleMarkerSymbol } from '@arcgis/core/symbols';
 
 export let view: MapView | null = null;
 
@@ -54,7 +56,7 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
         await mapView.when(() => {
             view = mapView;
             dispatch(setViewLoaded(true));
-            //window.view = mapView;
+            window.view = mapView;
             initializeCountriesLayer(view);
 
         });
@@ -62,3 +64,26 @@ export const initializeMapView = (divRef: HTMLDivElement) => async (dispatch: Ap
         console.log(error);
     }
 };
+
+const colors = {
+    event: 'rgb(254, 173, 97)',
+    throttle: 'rgb(184, 137, 255)',
+    debounce: 'rgb(137, 255, 243)',
+    promiseSuccess: 'rgb(137, 255, 147)'
+}
+type GraphicType = keyof typeof colors;
+
+export const addGraphic = (mapPoint: __esri.Point, type: GraphicType): void => {
+    const graphic = new Graphic({
+        geometry: mapPoint,
+        symbol: new SimpleMarkerSymbol({
+            color: colors[type],
+            size: "10px",
+            outline: {
+                color: "white",
+                width: "2px"
+            }
+        })
+    });
+    view.graphics.add(graphic);
+}
